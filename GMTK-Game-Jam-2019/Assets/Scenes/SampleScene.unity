@@ -518,6 +518,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainTilemap: {fileID: 61537332}
   terrain00: {fileID: 11400000, guid: 9808d658ba51e5d4a955921edf2c9bc7, type: 2}
+  terrain01: {fileID: 11400000, guid: ea34bdf7feedb264692f157ca81123df, type: 2}
+  empty: {fileID: 11400000, guid: 6234ef5fd41213841ba4c94a7ad94fc2, type: 2}
 --- !u!4 &1495018679
 Transform:
   m_ObjectHideFlags: 0
