@@ -16,7 +16,7 @@ public class ProceduralTerrainGeneration : MonoBehaviour
     private int denomFilledRoom = 4; // prob =  1 / denomLargeRoom
 
     private bool isTileLarge = false;
-    private bool isTileFilled = false;
+    //private bool isTileFilled = false;
 
     // tiles
     public Tilemap terrainTilemap;
@@ -35,14 +35,16 @@ public class ProceduralTerrainGeneration : MonoBehaviour
 
         // procedurally create the terrain
         GenerateTerrain();
-
-        // delete terrain that potentially blocks the path
-        ClearPathOfTerrain();
     }
 
 
     void GenerateTerrain()
     {
+        int entrance;
+        int exit;
+        entrance = Random.Range(0, 6);
+        exit = Random.Range(0, 6);
+
         for (int xLevel = 0; xLevel < levelDimensionsInTiles[0]; xLevel++)
         {
             for (int yLevel = 0; yLevel < levelDimensionsInTiles[1]; yLevel++)
@@ -79,14 +81,6 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         {
                             terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
                         }
-
-                        /*
-                        // if ..., then make it a hole
-                        if (xTile == (int)(tileDimensionsInBlocks[0] / 3) || yTile == (int)(tileDimensionsInBlocks[1] / 3))
-                        {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
-                        }
-                        */
                     }
                 }
 
@@ -105,13 +99,13 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         for (int yTile = 0; yTile < tileDimensionsInBlocks[1]; yTile++)
                         {
                             // if halfway horizontally through the tile, then make it a wall 
-                            if (xTile == (int)((tileDimensionsInBlocks[0]) / 2))
+                            if ((xTile == (int)((tileDimensionsInBlocks[0]) / 2)) & ((yTile != 5) & (yTile != 15)))
                             {
                                 terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
                             }
 
                             // if halfway vertically through the tile, then make it a wall 
-                            if (yTile == (int)((tileDimensionsInBlocks[1]) / 2))
+                            if ((yTile == (int)((tileDimensionsInBlocks[1]) / 2)) & ((xTile != 5) & (xTile != 15)))
                             {
                                 terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
                             }
@@ -122,6 +116,7 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                     {
                         for (int countY = 0; countY < 2; countY++)
                         {
+                            /*
                             isTileFilled = false;
                             if (Random.Range(1, denomFilledRoom + 1) == denomFilledRoom)
                             {
@@ -145,6 +140,7 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                     }
                                 }
                             }
+                            */
 
                             for (int xTile = 0; xTile < (tileDimensionsInBlocks[0] / 2) + 1; xTile++)
                             {
@@ -159,15 +155,6 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                     {
                                         terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), null);
                                     }
-
-
-                                    /*
-                                    // if ..., then make it a hole
-                                    if (xTile == (int)(tileDimensionsInBlocks[0] / 2) || yTile == (int)(tileDimensionsInBlocks[1] / 2))
-                                    {
-                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
-                                    }
-                                    */
                                 }
                             }
                         }
@@ -180,22 +167,42 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                     for (int yTile = 0; yTile < tileDimensionsInBlocks[1]; yTile++)
                     {         
                         // if ..., then make it a hole
-                        if ((xTile % (int)(tileDimensionsInBlocks[0] / 3)) == 0 || (yTile % (int)(tileDimensionsInBlocks[1] / 3)) == 0)
+                        if ((xTile == 5 || xTile == 15) && (yTile == 0 || yTile == 20) || (xTile == 0 || xTile == 20) && (yTile == 5 || yTile == 15))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]) + (int)(tileDimensionsInBlocks[0] / 3), yTile + (yLevel * tileDimensionsInBlocks[1]) + (int)(tileDimensionsInBlocks[1] / 3), 0), null);
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]) + (int)(tileDimensionsInBlocks[0] / 3), yTile + (yLevel * tileDimensionsInBlocks[1]) + (int)(tileDimensionsInBlocks[1] / 3), 0), null);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
 
                         }
 
+                        
+                        // if exterior, then make it a wall
+                        if ((xTile + (xLevel * tileDimensionsInBlocks[0]) == 0) || (xTile + (xLevel * tileDimensionsInBlocks[0]) == (tileDimensionsInBlocks[0] * levelDimensionsInTiles[0]) - 1))
+                        {
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                        }
+                        else if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == 0) || (yTile + (yLevel * tileDimensionsInBlocks[1]) == (tileDimensionsInBlocks[1] * levelDimensionsInTiles[1]) - 1))
+                        {
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                        }
+
+
+                        // make entrance / exit
+                        // entrance
+                        // TODO: PLACE SPAWN HERE
+                        if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == (tileDimensionsInBlocks[1] * levelDimensionsInTiles[1]) - 1) & ((int)(entrance * 10.5) + 5 == (xTile + (xLevel * tileDimensionsInBlocks[0]))))
+                        {
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
+                        }
+
+                        // exit
+                        // TODO: PLACE EXIT HERE
+                        if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == 0) & ((int)(exit * 10.5) + 5 == (xTile + (xLevel * tileDimensionsInBlocks[0]))))
+                        {
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
+                        }
                     }
                 }
             }
         }
-    }
-
-    void ClearPathOfTerrain()
-    {
-
     }
 
     void Update()
