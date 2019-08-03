@@ -20,13 +20,18 @@ public class ProceduralTerrainGeneration : MonoBehaviour
 
     // tiles
     public Tilemap terrainTilemap;
-    public Tile terrain00;
-    public Tile terrain01;
+
+
+    public RuleTile terrainRuleTile;
+    //public Tile terrain00;
+
+    //public Tile terrain01;
     public Tile empty;
 
 
     void Start()
     {
+
         // declare Level Dimensions In Tiles
         levelDimensionsInTiles.Add(3);  //x //3, since large rooms are 2x2 tiles.
         levelDimensionsInTiles.Add(3);  //y
@@ -65,23 +70,23 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         // if end of tile horizontally, then make it a wall
                         if (xTile == (int)(tileDimensionsInBlocks[0]) - 1)
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                         }
                         // if end of tile vertically, then make it a wall
                         if (yTile == (int)(tileDimensionsInBlocks[1]) - 1)
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                         }
 
                         // if beginning of tile horizontally, then make it a wall
                         if (xTile == 0)
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                         }
                         // if beginning of tile vertically, then make it a wall
                         if (yTile == 0)
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                         }
                     }
                 }
@@ -103,13 +108,13 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                             // if halfway horizontally through the tile, then make it a wall 
                             if ((xTile == (int)((tileDimensionsInBlocks[0]) / 2)) & ((yTile != 5) & (yTile != 15)))
                             {
-                                terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                                terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                             }
 
                             // if halfway vertically through the tile, then make it a wall 
                             if ((yTile == (int)((tileDimensionsInBlocks[1]) / 2)) & ((xTile != 5) & (xTile != 15)))
                             {
-                                terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                                terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                             }
                         }
                     }
@@ -134,7 +139,7 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                     // if filled, then make all blocks (leave a 1 gap from the borders empty ?)
                                     if (isTileFilled == true)
                                     {
-                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), terrain00);
+                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), terrainRuleTile);
                                     }
                                     // if unfilled, then fill normally (use noise, and leave a 1 gap from the borders empty ?)
                                     else
@@ -155,7 +160,7 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                         // SQUARE
                                         if (tetrisShape == 0)
                                         {
-                                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * (int)(tileDimensionsInBlocks[0] / 2) * countX), yTile + (yLevel * (int)(tileDimensionsInBlocks[1] / 2) * countY), 0), terrain00);
+                                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * (int)(tileDimensionsInBlocks[0] / 2) * countX), yTile + (yLevel * (int)(tileDimensionsInBlocks[1] / 2) * countY), 0), terrainRuleTile);
                                         }
 
                                         // L 
@@ -185,12 +190,12 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                 {
                                     if ((1 <= xTile && xTile <= ((tileDimensionsInBlocks[0] / 2) - 1)) && (1 == yTile || yTile == ((tileDimensionsInBlocks[1] / 2) - 1)))
                                     {
-                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), null);
+                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), empty);
                                     }
 
                                     else if ((1 == xTile || xTile == ((tileDimensionsInBlocks[0] / 2) - 1)) && (1 <= yTile && yTile <= ((tileDimensionsInBlocks[1] / 2) - 1)))
                                     {
-                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), null);
+                                        terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0] / 2), yTile + (yLevel * tileDimensionsInBlocks[1] / 2), 0), empty);
                                     }
                                 }
                             }
@@ -206,12 +211,12 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                     {   
                         
                         // place interior terrain
-                        int numTetris = Random.Range(0, 50);
+                        int numTetris = Random.Range(0, 25);
 
                         for (int i = 0; i < numTetris; i++)
                         {
-                            int xSpawn = Random.Range(0, tileDimensionsInBlocks[0]);
-                            int ySpawn = Random.Range(0, tileDimensionsInBlocks[1]);
+                            int xSpawn = Random.Range(2, tileDimensionsInBlocks[0] - 4);
+                            int ySpawn = Random.Range(2, tileDimensionsInBlocks[1] - 4);
 
                             int tetrisShape = Random.Range(0, 4);   // 0 = square, 1 = L , 2 = dong, 3 = I
 
@@ -221,10 +226,10 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                 if (tetrisShape == 0)
                                 {
                                     Vector3Int pos = new Vector3Int(xTile + (xLevel * (int)(tileDimensionsInBlocks[0])), yTile + (yLevel * (int)(tileDimensionsInBlocks[1])), 0);
-                                    checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                    checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrain00);
-                                    checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrain00);
-                                    checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrain00);
+                                    checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                    checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrainRuleTile);
+                                    checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrainRuleTile);
+                                    checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrainRuleTile);
                                 }
 
                                 // L 
@@ -236,34 +241,34 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                     if (rot == 0)
                                     {
                                         // 0
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 2, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 2, pos.z), terrainRuleTile);
                                     }
                                     else if (rot == 1)
                                     {
                                         // 90
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 2, pos.y + 1, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 2, pos.y + 1, pos.z), terrainRuleTile);
                                     }
                                     else if (rot == 2)
                                     {
                                         // 180
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y - 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y - 2, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y - 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y - 2, pos.z), terrainRuleTile);
                                     }
                                     else
                                     {
                                         // 270
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y - 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y - 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 2, pos.y - 1, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y - 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y - 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 2, pos.y - 1, pos.z), terrainRuleTile);
                                     }
                                 }
 
@@ -276,34 +281,34 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                     if (rot == 0)
                                     {
                                         // 0
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 2, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 2, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrainRuleTile);
                                     }
                                     else if (rot == 1)
                                     {
                                         // 90
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 2, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y + 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 2, pos.z), terrainRuleTile);
                                     }
                                     else if (rot == 2)
                                     {
                                         // 180
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 2, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y - 1, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 2, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y - 1, pos.z), terrainRuleTile);
                                     }
                                     else
                                     {
                                         // 270
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y - 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y - 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y - 2, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y - 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x - 1, pos.y - 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y - 2, pos.z), terrainRuleTile);
                                     }
 
                                 }
@@ -317,37 +322,28 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                                     if (rot == 0)
                                     {
                                         // 0
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 2, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x, pos.y + 3, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 1, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 2, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y + 3, pos.z), terrainRuleTile);
                                     }
                                     else
                                     {
                                         // 90
-                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 2, pos.y, pos.z), terrain00);
-                                        checkSetTile(new Vector3Int(pos.x + 3, pos.y, pos.z), terrain00);
+                                        checkSetTile(new Vector3Int(pos.x, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 1, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 2, pos.y, pos.z), terrainRuleTile);
+                                        checkSetTile(new Vector3Int(pos.x + 3, pos.y, pos.z), terrainRuleTile);
                                     }
                                 }
                             }
-                        }
-                        
-
-                        /*
-                        else if ((0 <= yTile && yTile <= tileDimensionsInBlocks[1] - 1) && (0 == xTile || xTile == tileDimensionsInBlocks[0]) && (yTile != 10))
-                        {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
-
-                        }  
-                        */
+                        }                      
 
 
                         // if ..., then make it a hole (making routes through level)
                         if ((xTile == 5 || xTile == 15) && (yTile == 0 || yTile == 20) || (xTile == 0 || xTile == 20) && (yTile == 5 || yTile == 15))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
 
                         }
 
@@ -355,23 +351,21 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         // if exterior, then make it a wall
                         if ((xTile + (xLevel * tileDimensionsInBlocks[0]) == 0) || (xTile + (xLevel * tileDimensionsInBlocks[0]) == (tileDimensionsInBlocks[0] * levelDimensionsInTiles[0]) - 1))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                         }
                         else if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == 0) || (yTile + (yLevel * tileDimensionsInBlocks[1]) == (tileDimensionsInBlocks[1] * levelDimensionsInTiles[1]) - 1))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrain00);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), terrainRuleTile);
                         }
 
 
                         // clear shite
                         if (((xTile == 1 || xTile == tileDimensionsInBlocks[0] - 2) || (xTile == 9) || (xTile == 11)) && (yTile != 10) && (yTile != 0) && (yTile != tileDimensionsInBlocks[1] - 1))
                         {
-                            Debug.Log("oogabooga");
                             terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
                         }
                         else if (((yTile == 1 || yTile == tileDimensionsInBlocks[1] - 2) || (yTile == 9) || (yTile == 11)) && (xTile != 10) && (xTile != 0) && (xTile != tileDimensionsInBlocks[0] - 1))
                         {
-                            Debug.Log("oogabooga");
                             terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
                         }
 
@@ -381,14 +375,14 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         // TODO: PLACE SPAWN HERE
                         if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == (tileDimensionsInBlocks[1] * levelDimensionsInTiles[1]) - 1) & ((int)(entrance * 10.5) + 5 == (xTile + (xLevel * tileDimensionsInBlocks[0]))))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
                         }
 
                         // exit
                         // TODO: PLACE EXIT HERE
                         if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == 0) & ((int)(exit * 10.5) + 5 == (xTile + (xLevel * tileDimensionsInBlocks[0]))))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), null);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
                         }
                     }
                 }
@@ -396,11 +390,18 @@ public class ProceduralTerrainGeneration : MonoBehaviour
         }
     }
 
-    private void checkSetTile(Vector3Int pos, Tile terrain00)
+    private void checkSetTile(Vector3Int pos, Tile tile)
     {
         if (terrainTilemap.GetTile(pos) == null)
         {
-            terrainTilemap.SetTile(pos, terrain00);
+            terrainTilemap.SetTile(pos, tile);
+        }
+    }
+    private void checkSetTile(Vector3Int pos, RuleTile tile)
+    {
+        if (terrainTilemap.GetTile(pos) == null)
+        {
+            terrainTilemap.SetTile(pos, tile);
         }
     }
 
