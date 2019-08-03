@@ -12,6 +12,26 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public GameObject cursor;
 
+    public GameObject hat;
+
+
+    [HideInInspector]
+    public bool isAttacking;
+    [HideInInspector]
+    public Vector3 startPos;
+    [HideInInspector]
+    public Vector3 target;
+    [HideInInspector]
+    public float startTime;
+    [HideInInspector]
+    public float journeyLength;
+    [HideInInspector]
+    public float speed = 10f;
+    [HideInInspector]
+    public bool returning = false;
+    [HideInInspector]
+
+
     void Start()
     {
         Cursor.visible = false;
@@ -25,22 +45,58 @@ public class CameraFollowPlayer : MonoBehaviour
         {
             lookAhead();
         }
+
+        if (isAttacking == true)
+        { 
+            float distCovered = (Time.time - startTime) * speed;
+
+            float fracJourney = distCovered / journeyLength;
+            fracJourney = Mathf.Min(fracJourney, 1);
+
+
+            // update hat pos
+            if (returning == true)
+            {
+                hat.transform.position = Vector3.Lerp(target, player.transform.position, fracJourney);  // return to the current player position
+            }
+            else
+            {
+                hat.transform.position = Vector3.Lerp(startPos, target, fracJourney);
+            }
+
+
+            if (fracJourney >= 1 && returning == false)
+            {
+                returning = true;
+                startTime = Time.time;
+            }
+            else if (fracJourney >= 1 && returning == true)
+            {
+                isAttacking = false;
+                hat.SetActive(false);
+            }
+        }
     }
 
-    /*
-    void FollowPlayer()
+
+    public void Attack()
     {
-        Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z - 10f);
-        this.transform.position = newPos;
+        returning = false;
+
+        hat.SetActive(true);
+
+        startPos = player.transform.position;
+        target = cursor.transform.position;
+
+        isAttacking = true;
+
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(startPos, target);
+        // lerp hat position to the target over time
     }
-    */
 
-    void RestrictMousePos()
-    {
 
-    }
-
-    void lookAhead()
+    private void lookAhead()
     {
         mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
         Vector3 dir = mousePos - this.transform.position;       
@@ -57,9 +113,6 @@ public class CameraFollowPlayer : MonoBehaviour
         Vector3 newPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z - 10f);
 
         transform.position = newPos += (dir.normalized * scale);
-
-
-
 
 
         // GUI Mouse cursor stuff      

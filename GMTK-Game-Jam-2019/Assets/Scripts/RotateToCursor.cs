@@ -10,7 +10,6 @@ public class RotateToCursor : MonoBehaviour
 
     private Animator animator;
 
-    public GameObject hat;
 
     void Start()
     {
@@ -26,7 +25,8 @@ public class RotateToCursor : MonoBehaviour
         RotateToCamera();
     }
 
-    void RotateToCamera()
+
+    private void RotateToCamera()
     {
         mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - cam.transform.position.z));
 

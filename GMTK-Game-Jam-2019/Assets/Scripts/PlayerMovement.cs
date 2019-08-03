@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 30/4f;
 
+    public CameraFollowPlayer cameraFollowPlayer;
+
     void Start()
     {
         _body = GetComponent<Rigidbody2D>();
@@ -48,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
                 // trigger attack animation
                 animator.SetBool("isAttack", true);
+                cameraFollowPlayer.Attack();
 
                 // set has hat false next frame...
                 _hasHat = false;
