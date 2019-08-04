@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     public CameraFollowPlayer cameraFollowPlayer;
 
+    public bool isAlive = true;
+
     void Start()
     {
         _body = GetComponent<Rigidbody2D>();
@@ -30,10 +32,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() // GET INPUTS & APPLY 'ONE-TIME' PHYSICS
     {
-
-
-        _inputs = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;  // GetAxisRaw should be sharper
-        _attack = Input.GetAxisRaw("Attack");
+        if (isAlive == true)
+        {
+            _inputs = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;  // GetAxisRaw should be sharper
+            _attack = Input.GetAxisRaw("Attack");
+        }
+        else
+        {
+            _inputs = Vector3.zero;
+            _attack = 0;
+        }
 
 
         // GET BUTTON DOWN (with axis)

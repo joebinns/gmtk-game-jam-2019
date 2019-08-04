@@ -6,6 +6,7 @@ TagManager:
   tags:
   - terrain
   - enemy
+  - hat
   layers:
   - Default
   - TransparentFX

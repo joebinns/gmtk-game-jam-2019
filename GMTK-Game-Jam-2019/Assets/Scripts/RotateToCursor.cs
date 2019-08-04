@@ -10,6 +10,8 @@ public class RotateToCursor : MonoBehaviour
 
     private Animator animator;
 
+    public bool isAlive = true;
+
 
     void Start()
     {
@@ -28,7 +30,11 @@ public class RotateToCursor : MonoBehaviour
 
     private void RotateToCamera()
     {
-        mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - cam.transform.position.z));
+        if (isAlive == true)
+        {
+            mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z - cam.transform.position.z));
+        }
+
 
         // rotation snap
         float angleDeg = Mathf.Atan2((mousePos.y - transform.position.y), (mousePos.x - transform.position.x)) * Mathf.Rad2Deg;

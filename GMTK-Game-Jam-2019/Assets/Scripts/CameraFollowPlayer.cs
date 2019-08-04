@@ -39,6 +39,10 @@ public class CameraFollowPlayer : MonoBehaviour
     public bool hasHat = true;
 
 
+    public bool isAlive = true;
+
+    private Vector3 dir;
+
 
     void Start()
     {
@@ -49,7 +53,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public void pickup()
     {
-        Debug.Log("gasgsa");
+        //Debug.Log("gasgsa");
 
         if (isAttacking == true)
         {
@@ -58,7 +62,7 @@ public class CameraFollowPlayer : MonoBehaviour
 
         else
         {
-            Debug.Log("aaaaaaaa");
+            //Debug.Log("aaaaaaaa");
 
             // disable hat GO
             hat.SetActive(false);
@@ -231,8 +235,12 @@ public class CameraFollowPlayer : MonoBehaviour
 
     private void lookAhead()
     {
-        mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
-        Vector3 dir = mousePos - this.transform.position;       
+        if (isAlive == true)
+        {
+            mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0));
+            dir = mousePos - this.transform.position;
+        }
+      
 
 
         // graze stuff
