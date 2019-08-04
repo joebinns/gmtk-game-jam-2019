@@ -36,12 +36,36 @@ public class CameraFollowPlayer : MonoBehaviour
     private float fracJourney;
 
 
+    public bool hasHat = true;
+
+
 
     void Start()
     {
         Cursor.visible = false;
         cam = Camera.main;
     }
+
+
+    public void pickup()
+    {
+        Debug.Log("gasgsa");
+
+        if (isAttacking == true)
+        {
+            // DO NOTHING
+        }
+
+        else
+        {
+            Debug.Log("aaaaaaaa");
+
+            // disable hat GO
+            hat.SetActive(false);
+            hasHat = true;
+        }
+    }
+
 
     public void hatReturn()
     {
@@ -59,6 +83,7 @@ public class CameraFollowPlayer : MonoBehaviour
             // DO NOTHING
         }
     }
+
 
     // TODO: MAKE IT BOUNCE A BIT, NOT JUST A SUDDEN STOP (LOOKS LIKE A BUG)
     //       THIS COULD BE ACHIEVED BY MAKING IT LERP A LESSER DISTANCE IN THE OPP DIRECTION
@@ -104,6 +129,8 @@ public class CameraFollowPlayer : MonoBehaviour
 
     private void Update()
     {
+        player.GetComponent<Animator>().SetBool("hasHat", hasHat);
+
         if (followPlayer == true)
         {
             lookAhead();
@@ -114,6 +141,10 @@ public class CameraFollowPlayer : MonoBehaviour
     {
         if (isAttacking == true)
         {
+            //hasHat = false;
+            //player.GetComponent<Animator>().SetBool("hasHat", false);
+            hasHat = false;
+
             hat.GetComponent<Animator>().SetBool("isMoving", true);
 
             float distCovered = (Time.time - startTime) * speed;
@@ -176,6 +207,9 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public void Attack()
     {
+        hasHit = false;
+        hasHat = false;
+
         dropping = false;
 
         hat.transform.position = player.transform.position;

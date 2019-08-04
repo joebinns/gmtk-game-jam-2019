@@ -12,8 +12,6 @@ public class PlayerMovement : MonoBehaviour
     private float _attack;
     private bool m_isAxisInUse = false;
 
-    private bool _hasHat = true;
-
 
     //private Vector2 playerMove = Vector2.zero;
 
@@ -32,8 +30,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() // GET INPUTS & APPLY 'ONE-TIME' PHYSICS
     {
-        animator.SetBool("hasHat", _hasHat);
-
 
 
         _inputs = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;  // GetAxisRaw should be sharper
@@ -50,10 +46,11 @@ public class PlayerMovement : MonoBehaviour
 
                 // trigger attack animation
                 animator.SetBool("isAttack", true);
-                cameraFollowPlayer.Attack();
 
-                // set has hat false next frame...
-                _hasHat = false;
+                if (cameraFollowPlayer.hasHat == true)
+                {
+                    cameraFollowPlayer.Attack();
+                }
             }
         }
         if (Input.GetAxisRaw("Attack") == 0)

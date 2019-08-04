@@ -1116,7 +1116,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 9f17656d49c7e514fb60f900bb34e85f, type: 2}
   - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 53ce2db7eed7e4c4bbb2fe6086cfa487, type: 2}
+    m_Data: {fileID: 11400000, guid: 5ff34e6f44ab59b4fae854f4b655cf25, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 042ca337540fe6847a5e5e2bdc99f874, type: 2}
   - m_RefCount: 1
@@ -1930,7 +1930,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 1.6801022e+10, g: 1.6801022e+10, b: 1.6801022e+10, a: 1.6801022e+10}
   - m_RefCount: 0
-    m_Data: {r: 1.7209295e+10, g: 1.7209295e+10, b: 1.7209295e+10, a: 1.7209295e+10}
+    m_Data: {r: 0, g: 0, b: 0, a: 0}
   - m_RefCount: 98
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_AnimationFrameRate: 1

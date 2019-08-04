@@ -13,7 +13,6 @@ public class ProceduralTerrainGeneration : MonoBehaviour
     private List<int> smallTileDimensionsInBlocks = new List<int>();
 
     private int denomLargeRoom = 3; // prob =  1 / denomLargeRoom
-    private int denomFilledRoom = 4; // prob =  1 / denomLargeRoom
 
     private bool isTileLarge = false;
     //private bool isTileFilled = false;
@@ -21,6 +20,7 @@ public class ProceduralTerrainGeneration : MonoBehaviour
     // tiles
     public Tilemap terrainTilemap;
 
+    public Tilemap floorTilemap;
 
     public RuleTile terrainRuleTile;
     //public Tile terrain00;
@@ -28,6 +28,14 @@ public class ProceduralTerrainGeneration : MonoBehaviour
     //public Tile terrain01;
     public Tile empty;
 
+    public GameObject bee;
+
+    public Tile entranceTile;
+    public Tile exitTile;
+
+    public Tile emptyBoxCollider;
+
+    public GameObject player;
 
     void Start()
     {
@@ -213,6 +221,31 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         // place interior terrain
                         int numTetris = Random.Range(0, 25);
 
+                        int numBees = Random.Range(0, 5);
+
+                        for (int i = 0; i < numBees; i++)
+                        {
+                            // ENEMIES
+                            int xSpawnEnemy = Random.Range(1, tileDimensionsInBlocks[0] - 1);
+                            int ySpawnEnemy = Random.Range(1, tileDimensionsInBlocks[1] - 1);
+
+                            if ((xTile == xSpawnEnemy) && (yTile == ySpawnEnemy))
+                            {
+                                Vector3Int pos = new Vector3Int(xTile + (xLevel * (int)(tileDimensionsInBlocks[0])), yTile + (yLevel * (int)(tileDimensionsInBlocks[1])), 0);
+
+                                if (terrainTilemap.GetTile(pos) == null)
+                                {
+                                    Vector3 worldPos = terrainTilemap.GetCellCenterWorld(pos);
+
+                                    Instantiate(bee, worldPos, Quaternion.identity);
+
+                                    //terrainTilemap.SetTile(pos, tile);
+                                }
+
+                            }
+                        }
+
+
                         for (int i = 0; i < numTetris; i++)
                         {
                             int xSpawn = Random.Range(2, tileDimensionsInBlocks[0] - 4);
@@ -375,14 +408,23 @@ public class ProceduralTerrainGeneration : MonoBehaviour
                         // TODO: PLACE SPAWN HERE
                         if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == (tileDimensionsInBlocks[1] * levelDimensionsInTiles[1]) - 1) & ((int)(entrance * 10.5) + 5 == (xTile + (xLevel * tileDimensionsInBlocks[0]))))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), emptyBoxCollider);
+                            floorTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), entranceTile);
+
+                            // spawn player (-1 on the y)
+
+                            Vector3Int pos = new Vector3Int(xTile + (xLevel * (int)(tileDimensionsInBlocks[0])), yTile + (yLevel * (int)(tileDimensionsInBlocks[1])), 0);
+
+                            Vector3 worldPos = terrainTilemap.GetCellCenterWorld(pos);
+                            player.transform.position = new Vector3(worldPos.x, worldPos.y - 1, worldPos.z);
                         }
 
                         // exit
                         // TODO: PLACE EXIT HERE
                         if ((yTile + (yLevel * tileDimensionsInBlocks[1]) == 0) & ((int)(exit * 10.5) + 5 == (xTile + (xLevel * tileDimensionsInBlocks[0]))))
                         {
-                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), empty);
+                            terrainTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), emptyBoxCollider);
+                            floorTilemap.SetTile(new Vector3Int(xTile + (xLevel * tileDimensionsInBlocks[0]), yTile + (yLevel * tileDimensionsInBlocks[1]), 0), exitTile);
                         }
                     }
                 }
