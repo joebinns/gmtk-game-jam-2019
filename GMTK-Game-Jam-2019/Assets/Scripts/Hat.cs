@@ -18,23 +18,16 @@ public class Hat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.tag);
-
-        if (collision.tag != "Player")
+        // return
+        if (collision.tag == "enemy")
         {
-            Debug.Log("collision");
+            cameraFollowPlayer.hatReturn();
+        }
 
-            if (cameraFollowPlayer.returning == false)
-            {
-                cameraFollowPlayer.returning = true;
-                cameraFollowPlayer.startTime = Time.time;
-
-                cameraFollowPlayer.target = cameraFollowPlayer.hat.transform.position;
-            }
-            else
-            {
-                // DO NOTHING
-            }
+        // drop
+        else if (collision.tag == "terrain")
+        {
+            cameraFollowPlayer.hatDrop();
         }
     }
 }

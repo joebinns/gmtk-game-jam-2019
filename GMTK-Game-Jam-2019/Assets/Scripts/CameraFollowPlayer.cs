@@ -30,6 +30,11 @@ public class CameraFollowPlayer : MonoBehaviour
     [HideInInspector]
     public bool returning = false;
     [HideInInspector]
+    public bool dropping = false;
+    [HideInInspector]
+    public bool hasHit = false;
+    private float fracJourney;
+
 
 
     void Start()
@@ -38,42 +43,132 @@ public class CameraFollowPlayer : MonoBehaviour
         cam = Camera.main;
     }
 
+    public void hatReturn()
+    {
+        hasHit = true;
 
-    void LateUpdate()
+        if (returning == false)
+        {
+            returning = true;
+            startTime = Time.time;
+
+            target = hat.transform.position;
+        }
+        else
+        {
+            // DO NOTHING
+        }
+    }
+
+    // TODO: MAKE IT BOUNCE A BIT, NOT JUST A SUDDEN STOP (LOOKS LIKE A BUG)
+    //       THIS COULD BE ACHIEVED BY MAKING IT LERP A LESSER DISTANCE IN THE OPP DIRECTION
+    public void hatDrop()
+    {
+        dropping = true;
+
+        if (fracJourney >= 1)
+        {
+            // DO NOTHING
+        }
+        else
+        {
+            // bounce
+            // opposite direction to current travel...
+            if (returning == true)
+            {
+                returning = false;
+
+                // ORDER MATTERS
+                startPos = hat.transform.position;   // current position
+                target = ((target - player.transform.position).normalized) + startPos;
+            }
+            else if (returning == false)
+            {
+                returning = true;
+
+                // ORDER MATTERS
+                target = ((startPos - target).normalized) + hat.transform.position;
+                startPos = hat.transform.position;   // current position
+            }
+        }
+
+
+        startTime = Time.time;
+        journeyLength = Vector3.Distance(startPos, target) * (fracJourney * 10f);
+        //journeyLength = Vector3.Distance(startPos, target) * 2; // *2, to make it slower
+
+        // then stop attacking
+        //isAttacking = false;
+    }
+
+
+    private void Update()
     {
         if (followPlayer == true)
         {
             lookAhead();
         }
+    }
 
+    void FixedUpdate()
+    {
         if (isAttacking == true)
-        { 
+        {
+            hat.GetComponent<Animator>().SetBool("isMoving", true);
+
             float distCovered = (Time.time - startTime) * speed;
 
-            float fracJourney = distCovered / journeyLength;
+            fracJourney = distCovered / journeyLength;
             fracJourney = Mathf.Min(fracJourney, 1);
 
+            // vary the speed
+            fracJourney = Mathf.Sqrt(fracJourney);
+
+            Debug.Log(fracJourney);
 
             // update hat pos
-            if (returning == true)
+            if (dropping == true)
             {
-                hat.transform.position = Vector3.Lerp(target, player.transform.position, fracJourney);  // return to the current player position
+
+                //hat.transform.position = Vector3.Lerp(startPos, target, fracJourney);
+                hat.GetComponent<Rigidbody2D>().MovePosition(Vector3.Lerp(startPos, target, fracJourney));
+            }
+            else if (returning == true)
+            {
+                //hat.transform.position = Vector2.Lerp(target, player.transform.position, fracJourney);
+                hat.GetComponent<Rigidbody2D>().MovePosition(Vector2.Lerp(target, player.transform.position, fracJourney));  // return to the current player position
             }
             else
             {
-                hat.transform.position = Vector3.Lerp(startPos, target, fracJourney);
+                //hat.transform.position = Vector2.Lerp(startPos, target, fracJourney);
+                hat.GetComponent<Rigidbody2D>().MovePosition(Vector2.Lerp(startPos, target, fracJourney));
             }
 
+            if (fracJourney >= 1 && dropping == true)
+            {
+                isAttacking = false;
+                hat.GetComponent<Animator>().SetBool("isMoving", false);
+            }
 
             if (fracJourney >= 1 && returning == false)
             {
                 returning = true;
                 startTime = Time.time;
+                if (hasHit == true)
+                {
+                    //journeyLength = Vector3.Distance(target, player.transform.position);
+                }
+                else
+                {
+                    isAttacking = false;
+                    hat.GetComponent<Animator>().SetBool("isMoving", false);
+                    //hatDrop();
+                }
             }
             else if (fracJourney >= 1 && returning == true)
             {
                 isAttacking = false;
-                hat.SetActive(false);
+                //hat.SetActive(false);
             }
         }
     }
@@ -81,6 +176,10 @@ public class CameraFollowPlayer : MonoBehaviour
 
     public void Attack()
     {
+        dropping = false;
+
+        hat.transform.position = player.transform.position;
+
         returning = false;
 
         hat.SetActive(true);
@@ -116,13 +215,17 @@ public class CameraFollowPlayer : MonoBehaviour
 
 
         // GUI Mouse cursor stuff      
-        if (dir.magnitude >= 1f)
+        if (dir.magnitude <= 1f)
         {
-            cursor.transform.position = player.transform.position + (dir);
+            cursor.transform.position = player.transform.position + (dir.normalized * 1f);
+        }
+        else if (dir.magnitude > 6f)
+        {
+            cursor.transform.position = player.transform.position + (dir.normalized * 6f);
         }
         else
         {
-            cursor.transform.position = player.transform.position + (dir.normalized * 1f);
+            cursor.transform.position = player.transform.position + (dir);
         }
     }
 }
