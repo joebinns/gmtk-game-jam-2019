@@ -37,9 +37,10 @@ public class ProceduralTerrainGeneration : MonoBehaviour
 
     public GameObject player;
 
+    private int frame;
+
     void Start()
     {
-
         // declare Level Dimensions In Tiles
         levelDimensionsInTiles.Add(3);  //x //3, since large rooms are 2x2 tiles.
         levelDimensionsInTiles.Add(3);  //y
@@ -51,7 +52,6 @@ public class ProceduralTerrainGeneration : MonoBehaviour
         // procedurally create the terrain
         GenerateTerrain();
     }
-
 
     void GenerateTerrain()
     {
@@ -449,6 +449,11 @@ public class ProceduralTerrainGeneration : MonoBehaviour
 
     void Update()
     {
-        
+        frame += 1;
+
+        if (frame == 5)
+        {
+            AstarPath.active.Scan();
+        }
     }
 }

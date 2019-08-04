@@ -155,7 +155,7 @@ public class CameraFollowPlayer : MonoBehaviour
             // vary the speed
             fracJourney = Mathf.Sqrt(fracJourney);
 
-            Debug.Log(fracJourney);
+            //Debug.Log(fracJourney);
 
             // update hat pos
             if (dropping == true)
@@ -247,16 +247,19 @@ public class CameraFollowPlayer : MonoBehaviour
 
         transform.position = newPos += (dir.normalized * scale);
 
-
         // GUI Mouse cursor stuff      
         if (dir.magnitude <= 1f)
         {
             cursor.transform.position = player.transform.position + (dir.normalized * 1f);
         }
+
+        /*
         else if (dir.magnitude > 6f)
         {
             cursor.transform.position = player.transform.position + (dir.normalized * 6f);
         }
+        */
+
         else
         {
             cursor.transform.position = player.transform.position + (dir);

@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraFollowPlayer
+    - Hat
     - PlayerMovement
     - ProceduralTerrainGeneration
     - RotateToCursor
@@ -9,9 +10,12 @@ ScriptsOnlyBuild:
     - UnityEngine.U2D.PixelPerfectCamera
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridPaintPaletteClipboard
+    - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
+    - UnityEditor.Tilemaps.PaintableSceneViewGrid
     - UnityEditor.Tilemaps.SceneViewGridManager
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.2D.Tilemap.Extras.Editor.dll:
@@ -27,15 +31,11 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateMachineNode
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
-    - UnityEditor.TestTools.TestRunner.TestListCacheData
   sceneClasses:
     Assets/Scenes/SampleScene.unity:
     - Class: 1
@@ -75,9 +75,11 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10108}
     - Class: 114
-      Script: {instanceID: 11228}
+      Script: {instanceID: 10948}
     - Class: 114
-      Script: {instanceID: 11304}
+      Script: {instanceID: 11230}
+    - Class: 114
+      Script: {instanceID: 11306}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -247,7 +249,7 @@ ScriptsOnlyBuild:
     className: RectMask2D
   - hash:
       serializedVersion: 2
-      Hash: 79553bad6cc4fd67c03131aa2ea0cbec
+      Hash: 884f9117265fa47bcb377d280ab9031f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ProceduralTerrainGeneration
@@ -433,6 +435,12 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 7ed9f8df8292d82840b12f1eda75942e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Hat
+  - hash:
+      serializedVersion: 2
       Hash: cdf089f6cdbdaf804990606672273b73
     assemblyName: Unity.2D.Tilemap.Extras.dll
     namespaceName: UnityEngine.Tilemaps
@@ -487,7 +495,7 @@ ScriptsOnlyBuild:
     className: TintTextureGenerator
   - hash:
       serializedVersion: 2
-      Hash: afc5b93a7b192de2dcb3832fe35a5c7e
+      Hash: a6a8e2c31e4ba0d6d33a922332b2606c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMovement
@@ -505,7 +513,7 @@ ScriptsOnlyBuild:
     className: MarkerTrack
   - hash:
       serializedVersion: 2
-      Hash: 95b895292cc01241325be45f9bd24708
+      Hash: 4f03974bd8d4fe58977bb7a31ad62599
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CameraFollowPlayer
@@ -608,4 +616,4 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/joebi/Desktop/GMTK-Game-Jam-2019-earlybuild/GMTK-Game-Jam-2019.exe
+  playerPath: C:/Users/joebi/Desktop/GMTK-Game-Jam-2019-secondbuild/GMTK-Game-Jam-2019.exe
