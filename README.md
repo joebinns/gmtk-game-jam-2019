@@ -1,4 +1,4 @@
-[![itch.io](https://joebinns.com/documents/banners/bloomerang_spread.png)](https://youtu.be/3GsXkzbfNBo "Stylised Character Controller: Demo. Click to watch.")
+[![itch.io](https://joebinns.com/documents/banners/bloomerang_spread.png)](https://seelocanth.itch.io/bloomerang "Bloomerang. Click to play")
 
 # Bloomerang
 
