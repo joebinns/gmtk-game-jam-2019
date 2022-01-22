@@ -6,8 +6,8 @@ The garden is swarming with angry bees! Luckily, you've got your trusty 'Bloomer
 
 Bloomerang is a procedural top-down roguelike.
 
-The game was conceptualised and made in 48 hours for the Game Maker's Toolkit Jam (GMTK) 2019. The theme of the jam was 'only one'.
+This game was conceptualised and made in 48 hours for the Game Maker's Toolkit Jam (GMTK) 2019. The theme of the jam was 'only one'.
 
-Before you read on, get a hands on feel for the project over at [itch.io](https://seelocanth.itch.io/bloomerang)!
+**Play at: [itch.io](https://seelocanth.itch.io/).**  
 
 A collaborative submission from [Joe Binns](https://joebinns.com/) & [Seelocanth](https://seelocanth.itch.io/).
